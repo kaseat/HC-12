@@ -25,11 +25,14 @@
 #define PING_OK 0x02
 #define PARAM_INCOME 0x03
 
-#define BAUDRATE_INCOME 0x05
-#define BAUDRATE_OK 0x0E
+#define BAUDRATE_INCOME 0x04
+#define BAUDRATE_OK 0x05
 
-#define POWER_INCOME 0x04
-#define POWER_OK 0x05
+#define POWER_INCOME 0x06
+#define POWER_OK 0x07
+
+#define FUNC_INCOME 0x08
+#define FUNC_OK 0x09
 
 #define BAUDRATE_CHAR 'B'
 #define CHANNEL_CHAR 'C'
@@ -55,6 +58,8 @@ static uint8_t baudrate_income_ptr;
 static uint32_t speeds[8] = { 1200,2400,4800,9600,19200,38400,57600,115200 };
 static bool success = 0;
 static uint8_t transmitter_power = 0;
+
+static uint8_t sreg = 0;
 
 void set_cfg_pin_low(void)
 {
@@ -90,17 +95,25 @@ void handle_byte(const uint8_t dat)
 			actual_state = BAUDRATE_INCOME;
 			baudrate_income_ptr = 0;
 			break;
+		case FUNC_CHAR_0:
+			sreg = 1;
+			break;
+		case FUNC_CHAR_1:
+			actual_state = sreg ? FUNC_INCOME : DEFAULT;
+			sreg = 0;
+			break;
 		default:
 			actual_state = DEFAULT;
 			break;
 		}
 		break;
+	case FUNC_INCOME:
+		// todo: add AT+FUx handler
+		actual_state = FUNC_OK;
+		break;
 	case POWER_INCOME:
 		transmitter_power = dat;
 		actual_state = POWER_OK;
-		break;
-	case 0x10:
-		actual_state = dat == 'U' ? 0x11 : DEFAULT;
 		break;
 	case BAUDRATE_INCOME:
 		if (baudrate_income_ptr < 4)
