@@ -34,6 +34,9 @@
 #define FUNC_INCOME 0x08
 #define FUNC_OK 0x09
 
+#define CHANNEL_INCOME 0x0A
+#define CHANNEL_OK 0x0B
+
 #define BAUDRATE_CHAR 'B'
 #define CHANNEL_CHAR 'C'
 #define FUNC_CHAR_0 'F'
@@ -54,10 +57,12 @@ static char* cmd_pwr = "AT+P";
 static char* cmd_br = "AT+B";
 static char* baudrates = "12002400480096001920384057601152";
 static char baudrate_income[4];
-static uint8_t baudrate_income_ptr;
+static char power_income[3];
+static uint8_t income_ptr;
 static uint32_t speeds[8] = { 1200,2400,4800,9600,19200,38400,57600,115200 };
 static bool success = 0;
 static uint8_t transmitter_power = 0;
+static uint8_t func_mode = 0;
 
 static uint8_t sreg = 0;
 
@@ -93,7 +98,7 @@ void handle_byte(const uint8_t dat)
 			break;
 		case BAUDRATE_CHAR:
 			actual_state = BAUDRATE_INCOME;
-			baudrate_income_ptr = 0;
+			income_ptr = 0;
 			break;
 		case FUNC_CHAR_0:
 			sreg = 1;
@@ -102,13 +107,28 @@ void handle_byte(const uint8_t dat)
 			actual_state = sreg ? FUNC_INCOME : DEFAULT;
 			sreg = 0;
 			break;
+		case CHANNEL_CHAR:
+			actual_state = CHANNEL_INCOME;
+			income_ptr = 0;
+			break;
 		default:
 			actual_state = DEFAULT;
 			break;
 		}
 		break;
+	case CHANNEL_INCOME:
+		if (income_ptr < 3)
+		{
+			power_income[income_ptr] = dat;
+			income_ptr++;
+		}
+		else
+		{
+			actual_state = CHANNEL_OK;
+		}
+		break;
 	case FUNC_INCOME:
-		// todo: add AT+FUx handler
+		func_mode = dat;
 		actual_state = FUNC_OK;
 		break;
 	case POWER_INCOME:
@@ -116,10 +136,10 @@ void handle_byte(const uint8_t dat)
 		actual_state = POWER_OK;
 		break;
 	case BAUDRATE_INCOME:
-		if (baudrate_income_ptr < 4)
+		if (income_ptr < 4)
 		{
-			baudrate_income[baudrate_income_ptr] = dat;
-			baudrate_income_ptr++;
+			baudrate_income[income_ptr] = dat;
+			income_ptr++;
 		}
 		else
 		{
