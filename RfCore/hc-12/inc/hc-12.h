@@ -20,6 +20,14 @@
 
 typedef enum
 {
+	transmitter_fu1 = '1',
+	transmitter_fu2 = '2',
+	transmitter_fu3 = '3',
+	transmitter_fu4 = '4'
+}transmitter_mode;
+
+typedef enum
+{
 	power_0 = 0x31,
 	power_2 = 0x32,
 	power_5 = 0x33,
@@ -33,19 +41,45 @@ typedef enum
 typedef enum
 {
 	baudrate_1200 = 0,
-	baudrate_2400 = 4,
-	baudrate_4800 = 8,
-	baudrate_9600 = 12,
-	baudrate_19200 = 16,
-	baudrate_38400 = 20,
-	baudrate_57600 = 24,
-	baudrate_115200 = 28,
+	baudrate_2400 = 1,
+	baudrate_4800 = 2,
+	baudrate_9600 = 3,
+	baudrate_19200 = 4,
+	baudrate_38400 = 5,
+	baudrate_57600 = 6,
+	baudrate_115200 = 7,
 }transmission_speed;
 
 /**
  * \brief Initialize hc-12 transmitter.
  */
 void hc12_init(void);
+
+/**
+ * \brief Set transmission mode.
+ * \param m Transmission mode.
+ * \return Returns 'true' if transmission mode has changed successfully, otherwise returns 'false'.
+ */
+bool hc12_set_transmission_mode(transmitter_mode m);
+
+/**
+ * \brief Get actual hc-12 transmission mode.
+ * \return Returns actual hc-12 transmission mode.
+ */
+transmitter_mode hc12_get_transmission_mode(void);
+
+/**
+ * \brief Set channel #.
+ * \param ch Channel.
+ * \return Returns 'true' if channel # has changed successfully, otherwise returns 'false'.
+ */
+bool hc12_set_channel(uint8_t ch);
+
+/**
+ * \brief Get channel #.
+ * \return Returns actual hc-12 channel #.
+ */
+uint8_t hc12_get_channel(void);
 
 /**
  * \brief Send byte using hc-12 transmitter. 
@@ -65,6 +99,12 @@ bool hc12_send_ping(void);
  * \return Returns 'true' if baudrate has changed successfully, otherwise returns 'false'.
  */
 bool hc12_set_baudrate(transmission_speed br);
+
+/**
+ * \brief Get actual hc-12 transmission speed.
+ * \return Returns actual hc-12 transmission speed.
+ */
+transmission_speed hc12_get_baudrate(void);
 
 /**
  * \brief Set hc-12 transmission power.

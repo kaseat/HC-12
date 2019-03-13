@@ -103,7 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;RFCORE_EXPORTS;_WINDOWS;_USRDLL;STM8S003;__CSMC__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;RFCORE_EXPORTS;_WINDOWS;_USRDLL;STM8S003;__CSMC__;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)kernel\inc;$(ProjectDir)clock\inc;$(ProjectDir)uart\inc;$(ProjectDir)hc-12\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

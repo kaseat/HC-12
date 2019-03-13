@@ -10,7 +10,7 @@ int main(void)
 
 	while (1)
 	{
-		hc12_send_byte(0x55);
-		delay(1000);
+		//hc12_send_byte(0x55);
+		//delay(1000);
 	}
 }

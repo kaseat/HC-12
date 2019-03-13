@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <string.h>
+
+#include "helpers.h"
 #include "hc-12.h"
 #include "uart.h"
 #include "kernel.h"
 #include "STM8S003F3.h"
+
 
 
 #define DEFAULT 0x00
@@ -46,6 +50,8 @@
 #define PING_CHAR_1 'K'
 #define PARAM_CHAR '+'
 
+#define NULL_STRING7 { 0x00,0x00,0x00,0x00,0x00,0x00,0x00 }
+
 #define TIMEOUT 150U
 
 #define CFG_BAUDRATE 9600U
@@ -55,8 +61,8 @@ static uint8_t desired_state;
 static char* cmd_ping = "AT";
 static char* cmd_pwr = "AT+P";
 static char* cmd_br = "AT+B";
-static char* baudrates = "12002400480096001920384057601152";
-static char baudrate_income[4];
+static char* cmd_ch = "AT+C";
+static char baudrate_income[5]={0x00,0x00,0x00,0x00,0x00};
 static char power_income[3];
 static uint8_t income_ptr;
 static uint32_t speeds[8] = { 1200,2400,4800,9600,19200,38400,57600,115200 };
@@ -167,6 +173,30 @@ void hc12_init()
 	uart_subscribe_byte_reception(handle_byte);
 }
 
+bool hc12_set_transmission_mode(transmitter_mode m)
+{
+	//todo: implement hc12_set_transmission_mode
+	return false;
+}
+
+bool hc12_set_channel(uint8_t ch)
+{
+	//todo: implement hc12_set_channel
+	return false;
+}
+
+uint8_t hc12_get_channel()
+{
+	//todo: implement hc12_get_channel
+	return 0;
+}
+
+transmitter_mode hc12_get_transmission_mode()
+{
+	//todo: implement hc12_get_transmission_mode
+	return transmitter_fu1;
+}
+
 void hc12_send_byte(uint8_t data)
 {
 	uart_send_byte(data);
@@ -231,8 +261,12 @@ bool hc12_set_baudrate(transmission_speed speed)
 	const uint32_t br = uart_get_baudrate();
 
 	uart_set_baudrate(CFG_BAUDRATE);
-	uart_send_data((uint8_t*)cmd_br, 4);
-	uart_send_data((uint8_t*)&baudrates[speed], 4);
+
+	char baudrate[7] = NULL_STRING7;
+
+	itoa(speeds[speed], baudrate);
+	uart_send_data((uint8_t*)cmd_br, strlen(cmd_br));
+	uart_send_data((uint8_t*)baudrate, strlen(baudrate));
 
 	bool result = true;
 	const uint32_t current = millis();
@@ -244,9 +278,15 @@ bool hc12_set_baudrate(transmission_speed speed)
 			break;
 		}
 	}
-	uart_set_baudrate(result ? br : speeds[speed / 4]);
+	uart_set_baudrate(result ? br : speeds[speed]);
 	set_cfg_pin_hi();
 	return result;
+}
+
+transmission_speed hc12_get_baudrate()
+{
+	//todo: implement hc12_get_baudrate
+	return baudrate_1200;
 }
 
 power_levels hc12_get_power()
