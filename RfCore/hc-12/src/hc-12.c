@@ -56,6 +56,11 @@
 
 #define CFG_BAUDRATE 9600U
 
+#define CMD_PING "AT"
+#define CMD_FUNC "AT+FU"
+#define CMD_PWR "AT+P"
+#define CMD_BR "AT+B"
+
 static uint8_t actual_state;
 static uint8_t desired_state;
 static char* cmd_ping = "AT";
@@ -80,6 +85,7 @@ void set_cfg_pin_low(void)
 
 void set_cfg_pin_hi(void)
 {
+	delay(50);
 	GPIOD->DDR &= ~(1 << 4);
 }
 
@@ -173,35 +179,6 @@ void hc12_init()
 	uart_subscribe_byte_reception(handle_byte);
 }
 
-bool hc12_set_transmission_mode(transmitter_mode m)
-{
-	//todo: implement hc12_set_transmission_mode
-	return false;
-}
-
-bool hc12_set_channel(uint8_t ch)
-{
-	//todo: implement hc12_set_channel
-	return false;
-}
-
-uint8_t hc12_get_channel()
-{
-	//todo: implement hc12_get_channel
-	return 0;
-}
-
-transmitter_mode hc12_get_transmission_mode()
-{
-	//todo: implement hc12_get_transmission_mode
-	return transmitter_fu1;
-}
-
-void hc12_send_byte(uint8_t data)
-{
-	uart_send_byte(data);
-}
-
 bool hc12_send_ping(void)
 {
 	desired_state = PING_OK;
@@ -209,7 +186,7 @@ bool hc12_send_ping(void)
 	set_cfg_pin_low();
 	const uint32_t br = uart_get_baudrate();
 	uart_set_baudrate(CFG_BAUDRATE);
-	uart_send_data((uint8_t*)cmd_ping, 2);
+	uart_send_string(CMD_PING);
 
 	bool result = true;
 	const uint32_t current = millis();
@@ -227,6 +204,56 @@ bool hc12_send_ping(void)
 	return result;
 }
 
+bool hc12_set_transmission_mode(transmitter_mode m)
+{
+	desired_state = FUNC_OK;
+
+	set_cfg_pin_low();
+	const uint32_t br = uart_get_baudrate();
+	uart_set_baudrate(CFG_BAUDRATE);
+	uart_send_string(CMD_FUNC);
+	uart_send_byte(m);
+
+	bool result = true;
+	const uint32_t current = millis();
+	while (!success)
+	{
+		if (millis() - current > TIMEOUT)
+		{
+			result = false;
+			break;
+		}
+	}
+
+	result = func_mode == m;
+	uart_set_baudrate(br);
+	set_cfg_pin_hi();
+	return result;
+}
+
+transmitter_mode hc12_get_transmission_mode()
+{
+	//todo: implement hc12_get_transmission_mode
+	return transmitter_fu1;
+}
+
+bool hc12_set_channel(uint8_t ch)
+{
+	//todo: implement hc12_set_channel
+	return false;
+}
+
+uint8_t hc12_get_channel()
+{
+	//todo: implement hc12_get_channel
+	return 0;
+}
+
+void hc12_send_byte(uint8_t data)
+{
+	uart_send_byte(data);
+}
+
 bool hc12_set_power(power_levels pwr)
 {
 	desired_state = POWER_OK;
@@ -234,7 +261,7 @@ bool hc12_set_power(power_levels pwr)
 	set_cfg_pin_low();
 	const uint32_t br = uart_get_baudrate();
 	uart_set_baudrate(CFG_BAUDRATE);
-	uart_send_data((uint8_t*)cmd_pwr, 4);
+	uart_send_string(CMD_PWR);
 	uart_send_byte(pwr);
 
 	bool result = true;
@@ -263,10 +290,9 @@ bool hc12_set_baudrate(transmission_speed speed)
 	uart_set_baudrate(CFG_BAUDRATE);
 
 	char baudrate[7] = NULL_STRING7;
-
 	itoa(speeds[speed], baudrate);
-	uart_send_data((uint8_t*)cmd_br, strlen(cmd_br));
-	uart_send_data((uint8_t*)baudrate, strlen(baudrate));
+	uart_send_string(CMD_BR);
+	uart_send_string(baudrate);
 
 	bool result = true;
 	const uint32_t current = millis();
@@ -278,6 +304,7 @@ bool hc12_set_baudrate(transmission_speed speed)
 			break;
 		}
 	}
+
 	uart_set_baudrate(result ? br : speeds[speed]);
 	set_cfg_pin_hi();
 	return result;

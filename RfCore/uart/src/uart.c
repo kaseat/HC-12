@@ -16,6 +16,7 @@
 #include "STM8S003F3.h"
 #include "platform.h"
 #include "clock.h"
+#include <string.h>
 
 static void(*reception_handler) (uint8_t) = 0;
 static uint32_t actual_baudrate;
@@ -59,9 +60,14 @@ void uart_send_byte(uint8_t data)
 	UART1->DR = data;
 }
 
-void uart_send_data(uint8_t * data, uint8_t len)
+void uart_send_data(uint8_t* data, uint8_t len)
 {
 	while (len--) uart_send_byte(*data++);
+}
+
+void uart_send_string(char* s)
+{
+	uart_send_data((uint8_t*)s, strlen(s));
 }
 
 void uart_subscribe_byte_reception(void(*handler) (uint8_t))

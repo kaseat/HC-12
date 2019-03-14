@@ -28,15 +28,15 @@ typedef enum
 
 typedef enum
 {
-	power_0 = 0x31,
-	power_2 = 0x32,
-	power_5 = 0x33,
-	power_8 = 0x34,
-	power_11 = 0x35,
-	power_14 = 0x36,
-	power_17 = 0x37,
-	power_20 = 0x38
-}power_levels;
+	power_0 = '1',
+	power_2 = '2',
+	power_5 = '3',
+	power_8 = '4',
+	power_11 = '5',
+	power_14 = '6',
+	power_17 = '7',
+	power_20 = '8'
+} power_levels;
 
 typedef enum
 {
@@ -54,6 +54,14 @@ typedef enum
  * \brief Initialize hc-12 transmitter.
  */
 void hc12_init(void);
+
+
+/**
+ * \brief Check if hc-12 module is available.
+ * \return Returns 'true' if hc-12 module is available, otherwise returns 'false'.
+ */
+bool hc12_send_ping(void);
+
 
 /**
  * \brief Set transmission mode.
@@ -86,12 +94,6 @@ uint8_t hc12_get_channel(void);
  * \param data Data.
  */
 void hc12_send_byte(uint8_t data);
-
-/**
- * \brief Check if hc-12 module is available.
- * \return Returns 'true' if hc-12 module is available, otherwise returns 'false'.
- */
-bool hc12_send_ping(void);
 
 /**
  * \brief Set hc-12 transmission speed.

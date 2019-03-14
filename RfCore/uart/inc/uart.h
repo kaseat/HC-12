@@ -46,7 +46,13 @@ void uart_send_byte(uint8_t data);
 * \param data Byte array pointer.
 * \param len Number of bytes to send.
 */
-void uart_send_data(uint8_t * data, uint8_t len);
+void uart_send_data(uint8_t* data, uint8_t len);
+
+/**
+* \brief Send null terminated string to UART.
+* \param s Null terminated string.
+*/
+void uart_send_string(char* s);
 
 /**
 * \brief Add callback function on byte received.

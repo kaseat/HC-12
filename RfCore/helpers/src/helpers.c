@@ -13,8 +13,25 @@
 // limitations under the License.
 
 #include "helpers.h"
+#include <string.h>
 
-void itoa(int n, char* s)
+void reverse(char* s)
 {
-	//todo: implement itoa only positive
+	for (int i = 0, j = strlen(s) - 1; i < j; i++, j--)
+	{
+		const char c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+}
+
+void itoa(uint32_t n, char* s)
+{
+	uint32_t  i = 0;
+	do
+	{
+		s[i++] = n % 10 + '0';
+	} while ((n /= 10) > 0);
+	s[i] = '\0';
+	reverse(s);
 }
