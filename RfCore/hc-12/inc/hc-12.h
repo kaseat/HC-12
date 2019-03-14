@@ -55,13 +55,17 @@ typedef enum
  */
 void hc12_init(void);
 
-
 /**
  * \brief Check if hc-12 module is available.
  * \return Returns 'true' if hc-12 module is available, otherwise returns 'false'.
  */
 bool hc12_send_ping(void);
 
+/**
+ * \brief Send byte using hc-12 transmitter.
+ * \param data Data.
+ */
+void hc12_send_byte(uint8_t data);
 
 /**
  * \brief Set transmission mode.
@@ -90,10 +94,17 @@ bool hc12_set_channel(uint8_t ch);
 uint8_t hc12_get_channel(void);
 
 /**
- * \brief Send byte using hc-12 transmitter. 
- * \param data Data.
+ * \brief Set hc-12 transmission power.
+ * \param pwr Power level.
+ * \return Returns 'true' if hc-12 transmission power has changed successfully, otherwise returns 'false'.
  */
-void hc12_send_byte(uint8_t data);
+bool hc12_set_power(power_levels pwr);
+
+/**
+ * \brief Get actual hc-12 transmission power.
+ * \return Returns actual hc-12 transmission power.
+ */
+power_levels hc12_get_power(void);
 
 /**
  * \brief Set hc-12 transmission speed.
@@ -107,18 +118,5 @@ bool hc12_set_baudrate(transmission_speed br);
  * \return Returns actual hc-12 transmission speed.
  */
 transmission_speed hc12_get_baudrate(void);
-
-/**
- * \brief Set hc-12 transmission power.
- * \param pwr Power level.
- * \return Returns 'true' if hc-12 transmission power has changed successfully, otherwise returns 'false'.
- */
-bool hc12_set_power(power_levels pwr);
-
-/**
- * \brief Get actual hc-12 transmission power.
- * \return Returns actual hc-12 transmission power.
- */
-power_levels hc12_get_power(void);
 
 #endif

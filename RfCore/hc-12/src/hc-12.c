@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <string.h>
+#include <stdlib.h>
 
 #include "helpers.h"
 #include "hc-12.h"
@@ -20,10 +20,7 @@
 #include "kernel.h"
 #include "STM8S003F3.h"
 
-
-
 #define DEFAULT 0x00
-#define SET_BR_OK 0x09
 
 #define PING_INCOME 0x01
 #define PING_OK 0x02
@@ -51,28 +48,27 @@
 #define PARAM_CHAR '+'
 
 #define NULL_STRING7 { 0x00,0x00,0x00,0x00,0x00,0x00,0x00 }
+#define NULL_STRING5 { 0x00,0x00,0x00,0x00,0x00 }
 
 #define TIMEOUT 150U
-
 #define CFG_BAUDRATE 9600U
 
 #define CMD_PING "AT"
 #define CMD_FUNC "AT+FU"
 #define CMD_PWR "AT+P"
 #define CMD_BR "AT+B"
+#define CMD_CH "AT+C"
 
+static uint8_t income_ptr;
 static uint8_t actual_state;
 static uint8_t desired_state;
-static char* cmd_ping = "AT";
-static char* cmd_pwr = "AT+P";
-static char* cmd_br = "AT+B";
-static char* cmd_ch = "AT+C";
+
+static char channel_income[4] = { 0x00,0x00,0x00,0x00 };
 static char baudrate_income[5]={0x00,0x00,0x00,0x00,0x00};
-static char power_income[3];
-static uint8_t income_ptr;
 static uint32_t speeds[8] = { 1200,2400,4800,9600,19200,38400,57600,115200 };
+
 static bool success = 0;
-static uint8_t transmitter_power = 0;
+static uint8_t transmitter_power = 255;
 static uint8_t func_mode = 0;
 
 static uint8_t sreg = 0;
@@ -85,8 +81,8 @@ void set_cfg_pin_low(void)
 
 void set_cfg_pin_hi(void)
 {
-	delay(50);
 	GPIOD->DDR &= ~(1 << 4);
+	delay(10);
 }
 
 void handle_byte(const uint8_t dat)
@@ -131,7 +127,7 @@ void handle_byte(const uint8_t dat)
 	case CHANNEL_INCOME:
 		if (income_ptr < 3)
 		{
-			power_income[income_ptr] = dat;
+			channel_income[income_ptr] = dat;
 			income_ptr++;
 		}
 		else
@@ -204,6 +200,11 @@ bool hc12_send_ping(void)
 	return result;
 }
 
+void hc12_send_byte(uint8_t data)
+{
+	uart_send_byte(data);
+}
+
 bool hc12_set_transmission_mode(transmitter_mode m)
 {
 	desired_state = FUNC_OK;
@@ -225,7 +226,7 @@ bool hc12_set_transmission_mode(transmitter_mode m)
 		}
 	}
 
-	result = func_mode == m;
+	result = result ? func_mode == m : false;
 	uart_set_baudrate(br);
 	set_cfg_pin_hi();
 	return result;
@@ -237,21 +238,43 @@ transmitter_mode hc12_get_transmission_mode()
 	return transmitter_fu1;
 }
 
-bool hc12_set_channel(uint8_t ch)
+bool hc12_set_channel(const uint8_t ch)
 {
-	//todo: implement hc12_set_channel
-	return false;
+	desired_state = CHANNEL_OK;
+
+	set_cfg_pin_low();
+	const uint32_t br = uart_get_baudrate();
+	uart_set_baudrate(CFG_BAUDRATE);
+
+	char channel[5] = NULL_STRING5;
+	itoa(ch, channel);
+	uart_send_string(CMD_CH);
+	if (ch < 100) uart_send_byte('0');
+	if (ch < 10) uart_send_byte('0');
+	uart_send_string(channel);
+
+	bool result = true;
+	const uint32_t current = millis();
+	while (!success)
+	{
+		if (millis() - current > TIMEOUT)
+		{
+			result = false;
+			break;
+		}
+	}
+
+	const uint8_t actual = atoi(channel_income);
+	result = result ? actual == ch : false;
+	uart_set_baudrate(br);
+	set_cfg_pin_hi();
+	return result;
 }
 
 uint8_t hc12_get_channel()
 {
 	//todo: implement hc12_get_channel
 	return 0;
-}
-
-void hc12_send_byte(uint8_t data)
-{
-	uart_send_byte(data);
 }
 
 bool hc12_set_power(power_levels pwr)
@@ -274,15 +297,21 @@ bool hc12_set_power(power_levels pwr)
 			break;
 		}
 	}
-
+	result = result ? pwr == transmitter_power : false;
 	uart_set_baudrate(br);
 	set_cfg_pin_hi();
 	return result;
 }
 
+power_levels hc12_get_power()
+{
+	return (power_levels)transmitter_power;
+}
+
+
 bool hc12_set_baudrate(transmission_speed speed)
 {
-	desired_state = SET_BR_OK;
+	desired_state = BAUDRATE_OK;
 
 	set_cfg_pin_low();
 	const uint32_t br = uart_get_baudrate();
@@ -305,6 +334,10 @@ bool hc12_set_baudrate(transmission_speed speed)
 		}
 	}
 
+	uint32_t* actual = (uint32_t*)baudrate_income;
+	uint32_t* expected = (uint32_t*)baudrate;
+	result = result ? &actual == &expected : false;
+
 	uart_set_baudrate(result ? br : speeds[speed]);
 	set_cfg_pin_hi();
 	return result;
@@ -314,9 +347,4 @@ transmission_speed hc12_get_baudrate()
 {
 	//todo: implement hc12_get_baudrate
 	return baudrate_1200;
-}
-
-power_levels hc12_get_power()
-{
-	return (power_levels)transmitter_power;
 }
