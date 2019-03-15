@@ -59,6 +59,8 @@
 #define CMD_BR "AT+B"
 #define CMD_CH "AT+C"
 
+#define GET_FUNC "AT+RF"
+
 static uint8_t income_ptr;
 static uint8_t actual_state;
 static uint8_t desired_state;
@@ -72,6 +74,7 @@ static uint8_t transmitter_power = 255;
 static uint8_t func_mode = 0;
 
 static uint8_t sreg = 0;
+static uint32_t context_baudrate;
 
 void set_cfg_pin_low(void)
 {
@@ -83,6 +86,35 @@ void set_cfg_pin_hi(void)
 {
 	GPIOD->DDR &= ~(1 << 4);
 	delay(10);
+}
+
+void enter_cfg_mode(const uint8_t ds)
+{
+	desired_state = ds;
+	set_cfg_pin_low();
+	context_baudrate  = uart_get_baudrate();
+	uart_set_baudrate(CFG_BAUDRATE);
+}
+
+void exit_cfg_mode(void)
+{
+	uart_set_baudrate(context_baudrate);
+	set_cfg_pin_hi();
+}
+
+bool wait_for_response(void)
+{
+	bool result = true;
+	const uint32_t current = millis();
+	while (!success)
+	{
+		if (millis() - current > TIMEOUT)
+		{
+			result = false;
+			break;
+		}
+	}
+	return result;
 }
 
 void handle_byte(const uint8_t dat)
@@ -169,7 +201,7 @@ void handle_byte(const uint8_t dat)
 	}
 }
 
-void hc12_init()
+void hc12_init(void)
 {
 	uart_init(9600);
 	uart_subscribe_byte_reception(handle_byte);
@@ -177,26 +209,12 @@ void hc12_init()
 
 bool hc12_send_ping(void)
 {
-	desired_state = PING_OK;
+	enter_cfg_mode(PING_OK);
 
-	set_cfg_pin_low();
-	const uint32_t br = uart_get_baudrate();
-	uart_set_baudrate(CFG_BAUDRATE);
 	uart_send_string(CMD_PING);
-
-	bool result = true;
-	const uint32_t current = millis();
-	while (!success)
-	{
-		if (millis() - current > TIMEOUT)
-		{
-			result = false;
-			break;
-		}
-	}
-
-	uart_set_baudrate(br);
-	set_cfg_pin_hi();
+	const bool result = wait_for_response();
+	
+	exit_cfg_mode();
 	return result;
 }
 
@@ -207,28 +225,16 @@ void hc12_send_byte(uint8_t data)
 
 bool hc12_set_transmission_mode(transmitter_mode m)
 {
-	desired_state = FUNC_OK;
+	enter_cfg_mode(FUNC_OK);
 
-	set_cfg_pin_low();
-	const uint32_t br = uart_get_baudrate();
-	uart_set_baudrate(CFG_BAUDRATE);
 	uart_send_string(CMD_FUNC);
 	uart_send_byte(m);
 
-	bool result = true;
-	const uint32_t current = millis();
-	while (!success)
-	{
-		if (millis() - current > TIMEOUT)
-		{
-			result = false;
-			break;
-		}
-	}
+	bool result = wait_for_response();
 
 	result = result ? func_mode == m : false;
-	uart_set_baudrate(br);
-	set_cfg_pin_hi();
+
+	exit_cfg_mode();
 	return result;
 }
 
@@ -240,11 +246,7 @@ transmitter_mode hc12_get_transmission_mode()
 
 bool hc12_set_channel(const uint8_t ch)
 {
-	desired_state = CHANNEL_OK;
-
-	set_cfg_pin_low();
-	const uint32_t br = uart_get_baudrate();
-	uart_set_baudrate(CFG_BAUDRATE);
+	enter_cfg_mode(CHANNEL_OK);
 
 	char channel[5] = NULL_STRING5;
 	itoa(ch, channel);
@@ -253,21 +255,12 @@ bool hc12_set_channel(const uint8_t ch)
 	if (ch < 10) uart_send_byte('0');
 	uart_send_string(channel);
 
-	bool result = true;
-	const uint32_t current = millis();
-	while (!success)
-	{
-		if (millis() - current > TIMEOUT)
-		{
-			result = false;
-			break;
-		}
-	}
+	bool result = wait_for_response();
 
 	const uint8_t actual = atoi(channel_income);
 	result = result ? actual == ch : false;
-	uart_set_baudrate(br);
-	set_cfg_pin_hi();
+
+	exit_cfg_mode();
 	return result;
 }
 
@@ -279,27 +272,16 @@ uint8_t hc12_get_channel()
 
 bool hc12_set_power(power_levels pwr)
 {
-	desired_state = POWER_OK;
+	enter_cfg_mode(POWER_OK);
 
-	set_cfg_pin_low();
-	const uint32_t br = uart_get_baudrate();
-	uart_set_baudrate(CFG_BAUDRATE);
 	uart_send_string(CMD_PWR);
 	uart_send_byte(pwr);
 
-	bool result = true;
-	const uint32_t current = millis();
-	while (!success)
-	{
-		if (millis() - current > TIMEOUT)
-		{
-			result = false;
-			break;
-		}
-	}
+	bool result = wait_for_response();
+
 	result = result ? pwr == transmitter_power : false;
-	uart_set_baudrate(br);
-	set_cfg_pin_hi();
+
+	exit_cfg_mode();
 	return result;
 }
 
@@ -311,35 +293,21 @@ power_levels hc12_get_power()
 
 bool hc12_set_baudrate(transmission_speed speed)
 {
-	desired_state = BAUDRATE_OK;
-
-	set_cfg_pin_low();
-	const uint32_t br = uart_get_baudrate();
-
-	uart_set_baudrate(CFG_BAUDRATE);
+	enter_cfg_mode(BAUDRATE_OK);
 
 	char baudrate[7] = NULL_STRING7;
 	itoa(speeds[speed], baudrate);
 	uart_send_string(CMD_BR);
 	uart_send_string(baudrate);
 
-	bool result = true;
-	const uint32_t current = millis();
-	while (!success)
-	{
-		if (millis() - current > TIMEOUT)
-		{
-			result = false;
-			break;
-		}
-	}
+	bool result = wait_for_response();
 
 	uint32_t* actual = (uint32_t*)baudrate_income;
 	uint32_t* expected = (uint32_t*)baudrate;
 	result = result ? &actual == &expected : false;
+	if (result) context_baudrate = speeds[speed];
 
-	uart_set_baudrate(result ? br : speeds[speed]);
-	set_cfg_pin_hi();
+	exit_cfg_mode();
 	return result;
 }
 
