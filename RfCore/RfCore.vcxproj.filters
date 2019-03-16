@@ -30,6 +30,9 @@
     <ClCompile Include="hc-12\src\hc-12.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="helpers\src\helpers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STM8S003F3.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hc-12\inc\hc-12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\inc\helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

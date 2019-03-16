@@ -20,6 +20,7 @@
 
 typedef enum
 {
+	transmitter_err = '0',
 	transmitter_fu1 = '1',
 	transmitter_fu2 = '2',
 	transmitter_fu3 = '3',
@@ -28,6 +29,7 @@ typedef enum
 
 typedef enum
 {
+	power_err = '0',
 	power_0 = '1',
 	power_2 = '2',
 	power_5 = '3',
@@ -48,6 +50,7 @@ typedef enum
 	baudrate_38400 = 5,
 	baudrate_57600 = 6,
 	baudrate_115200 = 7,
+	baudrate_err = '0',
 }transmission_speed;
 
 /**

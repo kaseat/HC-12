@@ -49,6 +49,7 @@
 
 #define NULL_STRING7 { 0x00,0x00,0x00,0x00,0x00,0x00,0x00 }
 #define NULL_STRING5 { 0x00,0x00,0x00,0x00,0x00 }
+#define NULL_STRING4 { 0x00,0x00,0x00,0x00 }
 
 #define TIMEOUT 150U
 #define CFG_BAUDRATE 9600U
@@ -59,22 +60,57 @@
 #define CMD_BR "AT+B"
 #define CMD_CH "AT+C"
 
+#define GET_BR "AT+RB"
+#define GET_CH "AT+RC"
 #define GET_FUNC "AT+RF"
+#define GET_PWR "AT+RP"
+
+static uint8_t input_buffer[15];
+static uint8_t input_buffer_ptr;
 
 static uint8_t income_ptr;
 static uint8_t actual_state;
 static uint8_t desired_state;
 
-static char channel_income[4] = { 0x00,0x00,0x00,0x00 };
-static char baudrate_income[5]={0x00,0x00,0x00,0x00,0x00};
+static char channel_income[4] = NULL_STRING4;
+static char baudrate_income[5] = NULL_STRING5;
 static uint32_t speeds[8] = { 1200,2400,4800,9600,19200,38400,57600,115200 };
 
 static bool success = 0;
-static uint8_t transmitter_power = 255;
+static char transmitter_power = 'z';
 static uint8_t func_mode = 0;
 
 static uint8_t sreg = 0;
 static uint32_t context_baudrate;
+
+#define read_begin 0x01
+#define read_end 0x02
+
+
+void handle_uart(const uint8_t dat)
+{
+	if (dat == 'O' && sreg != read_begin)
+	{
+		sreg = read_begin;
+		input_buffer_ptr = 0;
+	}
+
+	if (dat == '\n' && sreg == read_begin)
+	{
+		sreg = read_end;
+		if (input_buffer_ptr + 1 < 16)
+		{
+			input_buffer[input_buffer_ptr++] = dat;
+			input_buffer[input_buffer_ptr] = 0;
+		}
+	}
+
+	if (sreg == read_begin && input_buffer_ptr < 16)
+	{
+		input_buffer[input_buffer_ptr++] = dat;
+	}
+}
+
 
 void set_cfg_pin_low(void)
 {
@@ -138,6 +174,7 @@ void handle_byte(const uint8_t dat)
 			break;
 		case BAUDRATE_CHAR:
 			actual_state = BAUDRATE_INCOME;
+			*(uint32_t*)baudrate_income = 0;
 			income_ptr = 0;
 			break;
 		case FUNC_CHAR_0:
@@ -149,6 +186,7 @@ void handle_byte(const uint8_t dat)
 			break;
 		case CHANNEL_CHAR:
 			actual_state = CHANNEL_INCOME;
+			*(uint32_t*)channel_income = 0;
 			income_ptr = 0;
 			break;
 		default:
@@ -204,7 +242,7 @@ void handle_byte(const uint8_t dat)
 void hc12_init(void)
 {
 	uart_init(9600);
-	uart_subscribe_byte_reception(handle_byte);
+	uart_subscribe_byte_reception(handle_uart);
 }
 
 bool hc12_send_ping(void)
@@ -238,10 +276,16 @@ bool hc12_set_transmission_mode(transmitter_mode m)
 	return result;
 }
 
-transmitter_mode hc12_get_transmission_mode()
+transmitter_mode hc12_get_transmission_mode(void)
 {
-	//todo: implement hc12_get_transmission_mode
-	return transmitter_fu1;
+	enter_cfg_mode(FUNC_OK);
+
+	uart_send_string(GET_FUNC);
+
+	const char result = wait_for_response() ? func_mode : transmitter_err;
+
+	exit_cfg_mode();
+	return (transmitter_mode)result;
 }
 
 bool hc12_set_channel(const uint8_t ch)
@@ -249,7 +293,7 @@ bool hc12_set_channel(const uint8_t ch)
 	enter_cfg_mode(CHANNEL_OK);
 
 	char channel[5] = NULL_STRING5;
-	itoa(ch, channel);
+	itoa_(ch, channel);
 	uart_send_string(CMD_CH);
 	if (ch < 100) uart_send_byte('0');
 	if (ch < 10) uart_send_byte('0');
@@ -266,8 +310,12 @@ bool hc12_set_channel(const uint8_t ch)
 
 uint8_t hc12_get_channel()
 {
-	//todo: implement hc12_get_channel
-	return 0;
+	enter_cfg_mode(CHANNEL_OK);
+
+	uart_send_string(GET_CH);
+	const uint8_t result = wait_for_response() ? atoi(channel_income) : 0;
+	exit_cfg_mode();
+	return (transmitter_mode)result;
 }
 
 bool hc12_set_power(power_levels pwr)
@@ -287,16 +335,22 @@ bool hc12_set_power(power_levels pwr)
 
 power_levels hc12_get_power()
 {
-	return (power_levels)transmitter_power;
+	enter_cfg_mode(POWER_OK);
+
+	uart_send_string(GET_PWR);
+	const power_levels result = wait_for_response() ? (power_levels)transmitter_power : power_err;
+
+	exit_cfg_mode();
+	return result;
 }
 
 
-bool hc12_set_baudrate(transmission_speed speed)
+bool hc12_set_baudrate(transmission_speed br)
 {
 	enter_cfg_mode(BAUDRATE_OK);
 
 	char baudrate[7] = NULL_STRING7;
-	itoa(speeds[speed], baudrate);
+	itoa_(speeds[br], baudrate);
 	uart_send_string(CMD_BR);
 	uart_send_string(baudrate);
 
@@ -305,7 +359,7 @@ bool hc12_set_baudrate(transmission_speed speed)
 	uint32_t* actual = (uint32_t*)baudrate_income;
 	uint32_t* expected = (uint32_t*)baudrate;
 	result = result ? &actual == &expected : false;
-	if (result) context_baudrate = speeds[speed];
+	if (result) context_baudrate = speeds[br];
 
 	exit_cfg_mode();
 	return result;
@@ -313,6 +367,44 @@ bool hc12_set_baudrate(transmission_speed speed)
 
 transmission_speed hc12_get_baudrate()
 {
-	//todo: implement hc12_get_baudrate
-	return baudrate_1200;
+	enter_cfg_mode(BAUDRATE_OK);
+
+	uart_send_string(GET_BR);
+
+	transmission_speed br = baudrate_err;
+	if (wait_for_response())
+	{
+		switch (*(uint16_t*)baudrate_income)
+		{
+		case 0x3231:
+			br = baudrate_1200;
+			break;
+		case 0x3432:
+			br = baudrate_2400;
+			break;
+		case 0x3834:
+			br = baudrate_4800;
+			break;
+		case 0x3936:
+			br = baudrate_9600;
+			break;
+		case 0x3931:
+			br = baudrate_19200;
+			break;
+		case 0x3833:
+			br = baudrate_38400;
+			break;
+		case 0x3735:
+			br = baudrate_57600;
+			break;
+		case 0x3131:
+			br = baudrate_115200;
+			break;
+		default:
+			br = baudrate_err;
+			break;
+		}
+	}
+	exit_cfg_mode();
+	return br;
 }

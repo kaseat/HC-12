@@ -16,6 +16,6 @@
 #define __HELPERS__
 
 #include <stdint.h>
-void itoa(uint32_t n, char* s);
+void itoa_(uint32_t n, char* s);
 
 #endif
