@@ -5,10 +5,10 @@ int main(void)
 {
 	kernel_init();
 	hc12_init();
-	//bool res = hc12_set_transmission_mode(transmitter_fu3);
-	//res = hc12_set_channel(1);
-	//res = hc12_set_baudrate(baudrate_9600);
-	//res = hc12_set_power(power_11);
+	bool res = hc12_set_transmission_mode(transmitter_fu3);
+	res = hc12_set_channel(1);
+	res = hc12_set_baudrate(baudrate_9600);
+	res = hc12_set_power(power_5);
 
 	transmission_speed s = hc12_get_baudrate();
 	uint8_t c = hc12_get_channel();
