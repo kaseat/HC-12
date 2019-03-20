@@ -2110,6 +2110,12 @@
         <name>$PROJ_DIR$\hc-12\inc\hc-12.h</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\hc-12\src\hc-12_hal.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\hc-12\inc\hc-12_hal.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\helpers\src\helpers.c</name>
     </file>
     <file>

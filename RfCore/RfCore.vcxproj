@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="clock\src\clock.c" />
     <ClCompile Include="hc-12\src\hc-12.c" />
+    <ClCompile Include="hc-12\src\hc-12_hal.c" />
     <ClCompile Include="helpers\src\helpers.c" />
     <ClCompile Include="kernel\src\kernel.c" />
     <ClCompile Include="main.c" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="clock\inc\clock.h" />
     <ClInclude Include="hc-12\inc\hc-12.h" />
+    <ClInclude Include="hc-12\inc\hc-12_hal.h" />
     <ClInclude Include="helpers\inc\helpers.h" />
     <ClInclude Include="kernel\inc\kernel.h" />
     <ClInclude Include="platform.h" />
