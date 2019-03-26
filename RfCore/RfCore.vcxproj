@@ -37,6 +37,9 @@
     <ClInclude Include="STM8S003F3.h" />
     <ClInclude Include="uart\inc\uart.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="clock\src\delay.s" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4129613E-9B0F-4C5A-B0C5-CE7D7BD0984A}</ProjectGuid>

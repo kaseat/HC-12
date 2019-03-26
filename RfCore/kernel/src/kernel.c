@@ -30,14 +30,14 @@ void kernel_init()
 
 	// Set TIM4 overflow interrupt every 1 ms.
 	// This values calculated for 16 MHz clock.
-	TIM4->ARR = ARR_VAL;
-	TIM4->PSCR = PRSC_VAL;
+	//TIM4->ARR = ARR_VAL;
+	//TIM4->PSCR = PRSC_VAL;
 
 	// Enable overflow interrupts and run the timer.
-	TIM4->IER = TIM4_IER_UIE;
-	TIM4->CR1 = TIM4_CR1_CEN;
+	//TIM4->IER = TIM4_IER_UIE;
+	//TIM4->CR1 = TIM4_CR1_CEN;
 
-	enable_interrupts();
+	__enable_interrupts();
 }
 
 #pragma vector = TIM4_OVR_UIF_ISR

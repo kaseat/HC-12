@@ -1,82 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>3966737684</fileChecksum>
+    <fileChecksum>1701400733</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\clock\src\clock.c</file>
+            <file>$PROJ_DIR$\hc-12\inc\hc-12_hal.h</file>
             <file>$PROJ_DIR$\hc-12\inc\hc-12.h</file>
+            <file>$PROJ_DIR$\clock\src\clock.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\delay.s</file>
             <file>$PROJ_DIR$\hc-12\src\hc-12.c</file>
-            <file>$PROJ_DIR$\kernel\src\kernel.c</file>
             <file>$PROJ_DIR$\clock\inc\clock.h</file>
-            <file>$TOOLKIT_DIR$\lib\dlstm8smn.h</file>
-            <file>$PROJ_DIR$\kernel\inc\kernel.h</file>
-            <file>$PROJ_DIR$\Debug\Exe\RfCore.out</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\radio.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
-            <file>$PROJ_DIR$\spi\inc\spi.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\kernel.pbi</file>
-            <file>$PROJ_DIR$\spi\src\spi.c</file>
-            <file>$PROJ_DIR$\uart\src\uart.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-            <file>$TOOLKIT_DIR$\config\lnkstm8s003f3.icf</file>
-            <file>$PROJ_DIR$\platform.h</file>
-            <file>$PROJ_DIR$\uart\inc\uart.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-            <file>$PROJ_DIR$\Spi.h</file>
-            <file>$TOOLKIT_DIR$\lib\dbgstm8smd.a</file>
-            <file>$PROJ_DIR$\radio\inc\radio.h</file>
-            <file>$TOOLKIT_DIR$\lib\dlstm8smn.a</file>
-            <file>$PROJ_DIR$\Debug\Obj\kernel.__cstat.et</file>
-            <file>$PROJ_DIR$\STM8S003F3.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\RfCore.pbd</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$PROJ_DIR$\Spi.c</file>
-            <file>$PROJ_DIR$\radio\src\radio.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\kernel.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\radio.pbi</file>
-            <file>$PROJ_DIR$\Debug\Obj\helpers.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\helpers.pbi</file>
-            <file>$PROJ_DIR$\Debug\Obj\helpers.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\clock.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\hc-12.__cstat.et</file>
-            <file>$PROJ_DIR$\helpers\inc\helpers.h</file>
+            <file>$PROJ_DIR$\hc-12\src\hc-12_hal.c</file>
             <file>$PROJ_DIR$\helpers\src\helpers.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\hc-12_hal.pbi</file>
+            <file>$PROJ_DIR$\helpers\inc\helpers.h</file>
+            <file>$PROJ_DIR$\kernel\inc\kernel.h</file>
+            <file>$PROJ_DIR$\platform.h</file>
+            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\uart\src\uart.c</file>
+            <file>$PROJ_DIR$\Debug\Exe\RfCore.out</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi.o</file>
+            <file>$PROJ_DIR$\Spi.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\kernel.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\radio.o</file>
+            <file>$TOOLKIT_DIR$\lib\dlstm8smn.a</file>
+            <file>$PROJ_DIR$\Debug\Obj\RfCore.pbd</file>
+            <file>$PROJ_DIR$\Spi.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi.pbi</file>
+            <file>$PROJ_DIR$\spi\src\spi.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\kernel.pbi</file>
+            <file>$TOOLKIT_DIR$\lib\dlstm8smn.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$TOOLKIT_DIR$\lib\dbgstm8smd.a</file>
+            <file>$PROJ_DIR$\radio\src\radio.c</file>
+            <file>$PROJ_DIR$\STM8S003F3.h</file>
+            <file>$PROJ_DIR$\uart\inc\uart.h</file>
+            <file>$TOOLKIT_DIR$\config\lnkstm8s003f3.icf</file>
+            <file>$PROJ_DIR$\radio\inc\radio.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\kernel.o</file>
+            <file>$PROJ_DIR$\kernel\src\kernel.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\helpers.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\kernel_delay.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\helpers.o</file>
             <file>$PROJ_DIR$\Debug\Obj\hc-12_hal.o</file>
             <file>$PROJ_DIR$\Debug\Obj\uart.__cstat.et</file>
-            <file>$PROJ_DIR$\hc-12\src\hc-12_hal.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel_delay.s</file>
+            <file>$PROJ_DIR$\Debug\Obj\hc-12_hal.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\hc-12.o</file>
             <file>$PROJ_DIR$\Debug\Obj\uart.pbi</file>
             <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\clock.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\hc-12.__cstat.et</file>
             <file>$PROJ_DIR$\Debug\Obj\main.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\spi.__cstat.et</file>
-            <file>$PROJ_DIR$\Debug\Obj\clock.pbi</file>
             <file>$PROJ_DIR$\Debug\List\RfCore.map</file>
+            <file>$PROJ_DIR$\Debug\Obj\helpers.pbi</file>
             <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
             <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\hc-12.pbi</file>
-            <file>$PROJ_DIR$\Debug\Obj\uart.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\clock.o</file>
-            <file>$PROJ_DIR$\Debug\Obj\hc-12.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
             <file>$PROJ_DIR$\Debug\Obj\radio.__cstat.et</file>
+            <file>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel.s</file>
+            <file>$PROJ_DIR$\spi\inc\spi.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\clock.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\spi.__cstat.et</file>
+            <file>$PROJ_DIR$\Debug\Obj\hc-12_hal.pbi</file>
             <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\clock.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\radio.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\hc-12.pbi</file>
             <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-            <file>$PROJ_DIR$\hc-12\inc\hc-12_hal.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\uart.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\delay.s</file>
+            <file>$PROJ_DIR$\Debug\Obj\delay.o</file>
+            <file>$PROJ_DIR$\clock\src\delay.s</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 7 52</file>
+                    <file> 13 52</file>
                 </tool>
             </outputs>
         </file>
@@ -85,79 +93,169 @@
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 57</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 51</file>
+                    <file> 60</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 39</file>
+                    <file> 49</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 64</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 4 28</file>
+                    <file> 5 32</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 28 4</file>
+                    <file> 32 5</file>
                 </tool>
             </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\delay.s</name>
+            <outputs>
+                <tool>
+                    <name>ASTM8</name>
+                    <file> 71</file>
+                </tool>
+            </outputs>
         </file>
         <file>
             <name>$PROJ_DIR$\hc-12\src\hc-12.c</name>
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 58</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 55</file>
+                    <file> 46</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 40</file>
+                    <file> 50</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 66</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 61 54 59 34 5 8 22 18 62 41 13 1 53 63</file>
+                    <file> 63 55 69 56 28 26 25 16 67 8 29 1 54 0</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 59 18 13 22 1 34 41 63 54 62 5 8 61 53</file>
+                    <file> 69 16 29 25 1 56 8 0 55 67 28 26 63 54</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\kernel\src\kernel.c</name>
+            <name>$PROJ_DIR$\hc-12\src\hc-12_hal.c</name>
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 33</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 14</file>
+                    <file> 42</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 27</file>
+                    <file> 45</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 62</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 6 13 54 59 34 5 8 22 18 28 20 4</file>
+                    <file> 0 29 55 69 56 28 26 25 16 32 33 9</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 34 8 54 59 5 28 13 22 18 6 20 4</file>
+                    <file> 55 25 26 33 28 32 9 29 69 56 16 0</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\helpers\src\helpers.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 41</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 38</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 53</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 8 29 55 69 56 28 26 25 16 40 67</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 67 28 69 40 29 55 56 26 8 25 16</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 51</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 22</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 9 29 55 69 56 28 26 25 16 1 54 32 10</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 55 25 26 69 32 28 54 1 10 29 56 16 9</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\uart\src\uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 68</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 43</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 33 29 55 69 56 28 26 25 16 32 10 5 40 67</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 55 69 40 10 29 25 16 32 5 56 28 26 33 67</file>
                 </tool>
             </inputs>
         </file>
@@ -172,88 +270,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 19 57 58 44 38 33 49 56 26 24</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\spi\src\spi.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 10</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 17</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 50</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 12 13 54 59 34 5 8 22 18 28</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 13 54 34 59 28 18 12 22 5 8</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\uart\src\uart.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 56</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 47</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 45</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 21 13 54 59 34 5 8 22 18 28 20 4 64 62</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 54 59 64 20 13 22 18 28 4 34 5 8 21 62</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 49</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 48</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 11</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 6 13 54 59 34 5 8 22 18 1 53</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 34 13 59 18 1 54 22 5 8 53 6</file>
+                    <file> 34 60 71 46 42 41 36 51 68 19 30</file>
                 </tool>
             </inputs>
         </file>
@@ -262,21 +279,48 @@
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 10</file>
+                    <file> 14</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 17</file>
+                    <file> 23</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 23 13 54 59 34 5 8 22 18 28</file>
+                    <file> 15 29 55 69 56 28 26 25 16 32</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 54 59 28 22 18 13 34 5 8 23</file>
+                    <file> 55 69 32 25 16 29 56 28 26 15</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\spi\src\spi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 14</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 61</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 23</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 59 29 55 69 56 28 26 25 16 32</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 55 56 69 32 16 59 25 28 26</file>
                 </tool>
             </inputs>
         </file>
@@ -285,78 +329,95 @@
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 9</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 35</file>
+                    <file> 18</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 60</file>
+                    <file> 57</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 65</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 25 13 54 59 34 5 8 22 18 28 12 6</file>
+                    <file> 35 29 55 69 56 28 26 25 16 32 59 9</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 54 22 8 12 5 28 6 13 59 34 18 25</file>
+                    <file> 55 25 26 59 28 32 9 29 69 56 16 35</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\helpers\src\helpers.c</name>
+            <name>$PROJ_DIR$\kernel\src\kernel.c</name>
             <outputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 38</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 37</file>
+                    <file> 36</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
+                    <file> 17</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 27</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 9 29 55 69 56 28 26 25 16 32 10 5</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 56 26 55 69 28 32 29 25 16 9 10 5</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel_delay.s</name>
+            <outputs>
+                <tool>
+                    <name>ASTM8</name>
+                    <file> 39</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel.s</name>
+            <outputs>
+                <tool>
+                    <name>ASTM8</name>
                     <file> 36</file>
                 </tool>
             </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 41 13 54 59 34 5 8 22 18 64 62</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 62 5 59 64 13 54 34 8 41 22 18</file>
-                </tool>
-            </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\hc-12\src\hc-12_hal.c</name>
+            <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\delay.s</name>
             <outputs>
                 <tool>
-                    <name>ICCSTM8</name>
-                    <file> 44</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 43</file>
+                    <name>ASTM8</name>
+                    <file> 71</file>
                 </tool>
             </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCSTM8</name>
-                    <file> 63 13 54 59 34 5 8 22 18 28 21 6</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 54 22 8 21 5 28 6 13 59 34 18 63</file>
-                </tool>
-            </inputs>
         </file>
+        <file>
+            <name>$PROJ_DIR$\clock\src\delay.s</name>
+            <outputs>
+                <tool>
+                    <name>ASTM8</name>
+                    <file> 71</file>
+                </tool>
+            </outputs>
+        </file>
+        <forcedrebuild>
+            <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel_delay.s</name>
+            <tool>ASTM8</tool>
+        </forcedrebuild>
     </configuration>
     <configuration>
         <name>Release</name>

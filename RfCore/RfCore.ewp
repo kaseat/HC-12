@@ -146,7 +146,7 @@
                 </option>
                 <option>
                     <name>IccOptLevel</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IccOptStrategy</name>
@@ -155,7 +155,7 @@
                 </option>
                 <option>
                     <name>IccOptLevelSlave</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IccOptAllowList</name>
@@ -220,7 +220,7 @@
                 </option>
                 <option>
                     <name>CCListAssSource</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCEnableRemarks</name>
@@ -349,7 +349,7 @@
                 </option>
                 <option>
                     <name>AsmAllowDirectives</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>AsmMacroChars</name>
@@ -1613,6 +1613,9 @@
     </file>
     <file>
         <name>$PROJ_DIR$\clock\inc\clock.h</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\clock\src\delay.s</name>
     </file>
     <file>
         <name>$PROJ_DIR$\hc-12\src\hc-12.c</name>

@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma once
+	NAME delay
+	PUBLIC __delay_cycles
 
-#ifdef __ICCSTM8__
-#define __enable_interrupts() asm("RIM")
-#define __no_operation() asm("NOP")
-#else
-#define __interrupt
-#define __enable_interrupts()
-#define __no_operation()
-#endif
+	SECTION `.far_func.text`:CODE:REORDER:NOROOT(0)
+	CODE
+
+// Min delay 14 cycles
+__delay_cycles:
+	SUBW X, #0x0D
+cyc:
+	DECW X
+	JRNE cyc
+	RET
+
+	SECTION VREGS:DATA:REORDER:NOROOT(0)
+	END

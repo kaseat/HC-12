@@ -2104,6 +2104,9 @@
         <name>$PROJ_DIR$\clock\inc\clock.h</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\clock\src\delay.s</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\hc-12\src\hc-12.c</name>
     </file>
     <file>
