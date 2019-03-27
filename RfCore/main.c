@@ -2,8 +2,7 @@
 #include "hc-12.h"
 #include "STM8S003F3.h"
 #include "platform.h"
-
-extern void __delay_cycles(uint16_t us);
+#include "clock.h"
 
 int main(void)
 {
@@ -24,7 +23,7 @@ int main(void)
         GPIOD->CR2 = 1 << 3;
 	while (1)
 	{
-		__delay_cycles(18);
+		__delay_us(2);
 		GPIOD->ODR ^= 1 << 3;
 		//res = hc12_set_power(power_11);
 		//delay(1000);

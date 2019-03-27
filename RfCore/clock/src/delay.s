@@ -13,17 +13,30 @@
 // limitations under the License.
 
 	NAME delay
+	EXTERN actual_freq_delay
+	EXTERN ?sll16_x_x_a
+        
 	PUBLIC __delay_cycles
+	PUBLIC __delay_us
 
+	SECTION `.far_func.text`:CODE:REORDER:NOROOT(0)
+	CODE
+
+__delay_us:
+        LD A, actual_freq_delay ; 1
+        CALL ?sll16_x_x_a
+        CALL __delay_cycles
+	RET
+        
 	SECTION `.far_func.text`:CODE:REORDER:NOROOT(0)
 	CODE
 
 // Min delay 14 cycles
 __delay_cycles:
 	SUBW X, #0x0D
-cyc:
+__delay_cycles_cycle:
 	DECW X
-	JRNE cyc
+	JRNE __delay_cycles_cycle
 	RET
 
 	SECTION VREGS:DATA:REORDER:NOROOT(0)

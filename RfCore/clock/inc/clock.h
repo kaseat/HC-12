@@ -14,6 +14,7 @@
 
 #ifndef __STM8_CLOCK__
 #define __STM8_CLOCK__
+#include <stdint.h>
 
 typedef enum 
 {
@@ -34,5 +35,13 @@ cpu_freq get_cpu_freq();
  * \param freq Frequency we wanna set.
  */
 void set_cpu_freq(cpu_freq freq);
+
+/**
+ * \brief Delay cycles.
+ * \param n Number of cycles.
+ */
+//extern void __delay_cycles(uint16_t n);
+
+extern void __delay_us(uint16_t us);
 
 #endif
