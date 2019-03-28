@@ -33,10 +33,12 @@ __delay_us:
 
 // Min delay 14 cycles
 __delay_cycles:
-	SUBW X, #0x0D
-__delay_cycles_cycle:
+	NOP
+__delay_cycles_c:
+        NOP
 	DECW X
-	JRNE __delay_cycles_cycle
+	JRNE __delay_cycles_c
+        NOP
 	RET
 
 	SECTION VREGS:DATA:REORDER:NOROOT(0)

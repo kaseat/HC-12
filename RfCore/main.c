@@ -18,12 +18,12 @@ int main(void)
 	//transmitter_channel c = hc12_get_channel();
 	//transmitter_power p = hc12_get_power();
 	//transmitter_mode m = hc12_get_transmission_mode();
-        GPIOD->DDR = 1 << 3;
-        GPIOD->CR1 = 1 << 3;
-        GPIOD->CR2 = 1 << 3;
+	GPIOD->DDR = 1 << 3;
+	GPIOD->CR1 = 1 << 3;
+	GPIOD->CR2 = 1 << 3;
 	while (1)
 	{
-		__delay_us(2);
+		__delay_cycles(196);
 		GPIOD->ODR ^= 1 << 3;
 		//res = hc12_set_power(power_11);
 		//delay(1000);
