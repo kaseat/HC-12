@@ -37,11 +37,9 @@ cpu_freq get_cpu_freq();
 void set_cpu_freq(cpu_freq freq);
 
 /**
- * \brief Delay cycles.
- * \param n Number of cycles.
+ * \brief Delay us.
+ * \param us Delay, us.
  */
-extern void __delay_cycles(uint16_t n);
-
 extern void __delay_us(uint16_t us);
 
 #endif

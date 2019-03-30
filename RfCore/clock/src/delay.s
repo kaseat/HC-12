@@ -23,22 +23,22 @@
 	CODE
 
 __delay_us:
-        LD A, actual_freq_delay ; 1
-        CALL ?sll16_x_x_a
-        CALL __delay_cycles
-	RET
-        
-	SECTION `.far_func.text`:CODE:REORDER:NOROOT(0)
-	CODE
-
-// Min delay 14 cycles
-__delay_cycles:
+	LD A, actual_freq_delay
+	JRMI __delay_us_divide_2
+	JREQ __delay_us_begin
+	SLLW X
+	CP A, #0x02
+	JRNE __delay_us_begin
+	SLLW X
+	JRA __delay_us_begin
+__delay_us_divide_2:
+	SRLW X
+__delay_us_begin:
+	SUBW X, #6
+__delay_us_cycles_c:
 	NOP
-__delay_cycles_c:
-        NOP
 	DECW X
-	JRNE __delay_cycles_c
-        NOP
+	JRNE __delay_us_cycles_c
 	RET
 
 	SECTION VREGS:DATA:REORDER:NOROOT(0)

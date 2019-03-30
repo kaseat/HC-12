@@ -16,7 +16,7 @@
 #include "STM8S003F3.h"
 
 static cpu_freq actual_freq = cpu_freq_2_mhz;
-uint8_t actual_freq_delay = 0x02;
+int8_t actual_freq_delay = 0;
 
 cpu_freq get_cpu_freq()
 {
@@ -29,19 +29,19 @@ void set_cpu_freq(const cpu_freq freq)
 	switch (freq)
 	{
 	case cpu_freq_2_mhz:
-		actual_freq_delay = 0x01;
+		actual_freq_delay = -1;
 		CLK->CKDIVR = 3;
 		break;
 	case cpu_freq_4_mhz:
-		actual_freq_delay = 0x02;
+		actual_freq_delay = 0;
 		CLK->CKDIVR = 2;
 		break;
 	case cpu_freq_8_mhz:
-		actual_freq_delay = 0x03;
+		actual_freq_delay = 1;
 		CLK->CKDIVR = 1;
 		break;
 	case cpu_freq_16_mhz:
-		actual_freq_delay = 0x04;
+		actual_freq_delay = 2;
 		CLK->CKDIVR = 0;
 		break;
 	default:
