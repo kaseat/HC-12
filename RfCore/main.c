@@ -21,18 +21,11 @@ int main(void)
 	GPIOD->DDR = 1 << 3;
 	GPIOD->CR1 = 1 << 3;
 	GPIOD->CR2 = 1 << 3;
-        GPIOD->ODR = 0;
-        __delay_us(2);
-        GPIOD->ODR = 1 << 3;
-        __delay_us(5);
-         GPIOD->ODR = 0;
-         __delay_us(15);
-         
-        GPIOD->ODR = 1 << 3;
+
 	while (1)
 	{
-		//__delay_us(80);
-		//GPIOD->ODR ^= 1 << 3;
+		__delay_us(80);
+		GPIOD->ODR ^= 1 << 3;
 		//res = hc12_set_power(power_11);
 		//delay(1000);
 	}

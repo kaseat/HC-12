@@ -14,10 +14,11 @@
 
 	NAME delay
 	EXTERN actual_freq_delay
-	EXTERN ?sll16_x_x_a
-        
-	PUBLIC __delay_cycles
+
 	PUBLIC __delay_us
+
+	#define f16mhz 0x02
+	#define adj_cycle 0x06
 
 	SECTION `.far_func.text`:CODE:REORDER:NOROOT(0)
 	CODE
@@ -27,14 +28,14 @@ __delay_us:
 	JRMI __delay_us_divide_2
 	JREQ __delay_us_begin
 	SLLW X
-	CP A, #0x02
+	CP A, #f16mhz
 	JRNE __delay_us_begin
 	SLLW X
 	JRA __delay_us_begin
 __delay_us_divide_2:
 	SRLW X
 __delay_us_begin:
-	SUBW X, #6
+	SUBW X, #adj_cycle
 __delay_us_cycles_c:
 	NOP
 	DECW X

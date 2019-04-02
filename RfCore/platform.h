@@ -16,9 +16,11 @@
 
 #ifdef __ICCSTM8__
 #define __enable_interrupts() asm("RIM")
+#define __disable_interrupts() asm("SIM")
 #define __no_operation() asm("NOP")
 #else
 #define __interrupt
 #define __enable_interrupts()
+#define __disable_interrupts()
 #define __no_operation()
 #endif

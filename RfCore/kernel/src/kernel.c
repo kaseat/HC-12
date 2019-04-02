@@ -37,7 +37,7 @@ void kernel_init()
 	//TIM4->IER = TIM4_IER_UIE;
 	//TIM4->CR1 = TIM4_CR1_CEN;
 
-	__enable_interrupts();
+	__enable_irq();
 }
 
 #pragma vector = TIM4_OVR_UIF_ISR
