@@ -79,8 +79,8 @@ aosong_status aosong_read_sensor()
 
 	aosong_enable_irq();
 
-	uint8_t* d_pt = (uint8_t*)&aosong_sensor_raw_data;
-	if (*d_pt != (uint8_t)(d_pt[1] + d_pt[2] + d_pt[3] + d_pt[4]))
+	uint8_t* d_pt = aosong_sensor_raw_data;
+	if (d_pt[4] != (uint8_t)(d_pt[0] + d_pt[1] + d_pt[2] + d_pt[3]))
 		return aosong_invalid_checksum;
 
 	return aosong_ok;
@@ -88,19 +88,17 @@ aosong_status aosong_read_sensor()
 
 uint32_t aosong_get_raw_data()
 {
-	return (uint32_t)&aosong_sensor_raw_data;
+	return *(uint32_t*)aosong_sensor_raw_data;
 }
 
-uint_fast16_t aosong_get_temperature(void)
+uint16_t aosong_get_temperature(void)
 {
-	uint8_t* ptr = (uint8_t*)&aosong_sensor_raw_data;
-	return *(ptr + 2) << 8 | *(ptr + 1);
+	return *(uint16_t*)&aosong_sensor_raw_data[2];
 }
 
-uint_fast16_t aosong_get_humidity(void)
+uint16_t aosong_get_humidity(void)
 {
-	uint8_t* ptr = (uint8_t*)&aosong_sensor_raw_data;
-	return *(ptr + 4) << 8 | *(ptr + 3);
+	return *(uint16_t*)&aosong_sensor_raw_data[0];
 }
 
 uint32_t aosong_get_temperature_ascii(void)

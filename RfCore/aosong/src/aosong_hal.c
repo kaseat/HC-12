@@ -42,7 +42,7 @@ void aosong_delay_us(const uint16_t us)
 void aosong_wait_for_sensor_pin_high()
 {
 	uint16_t counter = 0;
-	while (SENSOR_PORT->IDR & (1 << SENSOR_PIN))
+	while (!(SENSOR_PORT->IDR & (1 << SENSOR_PIN)))
 	{
 		if(counter++ >0xFFF)
 		{
@@ -54,7 +54,7 @@ void aosong_wait_for_sensor_pin_high()
 void aosong_wait_for_sensor_pin_low()
 {
 	uint16_t counter = 0;
-	while (!(SENSOR_PORT->IDR & (1 << SENSOR_PIN)))
+	while (SENSOR_PORT->IDR & (1 << SENSOR_PIN))
 	{
 		if(counter++ >0xFFF)
 		{
