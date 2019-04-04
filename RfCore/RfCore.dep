@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>1701400733</fileChecksum>
+    <fileChecksum>993900114</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
@@ -78,6 +78,14 @@
             <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
             <file>$PROJ_DIR$\Debug\Obj\helpers.o</file>
             <file>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel.s</file>
+            <file>$PROJ_DIR$\aosong\inc\aosong.h</file>
+            <file>$PROJ_DIR$\aosong\inc\aosong_hal.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\aosong.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\aosong_hal.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\aosong_hal.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\aosong.o</file>
+            <file>$PROJ_DIR$\aosong\src\aosong_hal.c</file>
+            <file>$PROJ_DIR$\aosong\src\aosong.c</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
@@ -162,7 +170,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 25 68 42 60 37 71 53 43 67 17 30</file>
+                    <file> 25 78 77 68 42 60 37 71 53 43 67 17 30</file>
                 </tool>
             </inputs>
         </file>
@@ -212,11 +220,11 @@
             <inputs>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 8 32 55 0 57 58 14 15 41 21 6 22 48 2</file>
+                    <file> 41 55 4 21 8 73 0 57 58 6 22 2</file>
                 </tool>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 2 57 41 55 58 6 22 21 8 14 48 0 15 32</file>
+                    <file> 2 57 41 55 58 6 22 21 8 73 4 0</file>
                 </tool>
             </inputs>
         </file>
@@ -413,6 +421,52 @@
                     <file> 53</file>
                 </tool>
             </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\aosong\src\aosong_hal.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 76</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 77</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 55 41 32 57 21 8 0 48 58 6 22 74 15</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 74 48 32 57 41 55 58 6 22 21 8 0 15</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\aosong\src\aosong.c</name>
+            <outputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 75</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 78</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 41 21 57 6 32 74 55 58 8 22 73 48</file>
+                </tool>
+                <tool>
+                    <name>ICCSTM8</name>
+                    <file> 73 57 41 55 58 6 22 21 8 74 48 32</file>
+                </tool>
+            </inputs>
         </file>
         <forcedrebuild>
             <name>$PROJ_DIR$\..\..\..\..\source\repos\RfSensor\RfCore\kernel\src\kernel_delay.s</name>

@@ -30,18 +30,18 @@ void kernel_init()
 
 	// Set TIM4 overflow interrupt every 1 ms.
 	// This values calculated for 16 MHz clock.
-	//TIM4->ARR = ARR_VAL;
-	//TIM4->PSCR = PRSC_VAL;
+	TIM4->ARR = ARR_VAL;
+	TIM4->PSCR = PRSC_VAL;
 
 	// Enable overflow interrupts and run the timer.
-	//TIM4->IER = TIM4_IER_UIE;
-	//TIM4->CR1 = TIM4_CR1_CEN;
+	TIM4->IER = TIM4_IER_UIE;
+	TIM4->CR1 = TIM4_CR1_CEN;
 
-	__enable_irq();
+	__enable_interrupts();
 }
 
 #pragma vector = TIM4_OVR_UIF_ISR
-__interrupt void OnTim4Overflow(void)
+__interrupt void on_tim4_overflow(void)
 {
 	TIM4->SR = 0;
 	counter++;
@@ -52,7 +52,7 @@ uint32_t millis()
 	return counter;
 }
 
-void delay(uint32_t ms)
+void delay(const uint32_t ms)
 {
 	const uint32_t current = counter;
 	while (counter - current < ms) {}

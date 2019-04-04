@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aosong\src\aosong.c" />
+    <ClCompile Include="aosong\src\aosong_hal.c" />
     <ClCompile Include="clock\src\clock.c" />
     <ClCompile Include="hc-12\src\hc-12.c" />
     <ClCompile Include="hc-12\src\hc-12_hal.c" />
@@ -28,6 +30,8 @@
     <ClCompile Include="uart\src\uart.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aosong\inc\aosong.h" />
+    <ClInclude Include="aosong\inc\aosong_hal.h" />
     <ClInclude Include="clock\inc\clock.h" />
     <ClInclude Include="hc-12\inc\hc-12.h" />
     <ClInclude Include="hc-12\inc\hc-12_hal.h" />
@@ -112,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;RFCORE_EXPORTS;_WINDOWS;_USRDLL;STM8S003;__CSMC__;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)helpers\inc;$(ProjectDir)kernel\inc;$(ProjectDir)clock\inc;$(ProjectDir)uart\inc;$(ProjectDir)hc-12\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)helpers\inc;$(ProjectDir)kernel\inc;$(ProjectDir)clock\inc;$(ProjectDir)uart\inc;$(ProjectDir)hc-12\inc;$(ProjectDir)aosong\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

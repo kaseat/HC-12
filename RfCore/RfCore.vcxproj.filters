@@ -36,6 +36,12 @@
     <ClCompile Include="hc-12\src\hc-12_hal.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="aosong\src\aosong.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aosong\src\aosong_hal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STM8S003F3.h">
@@ -60,6 +66,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hc-12\inc\hc-12_hal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aosong\inc\aosong.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aosong\inc\aosong_hal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

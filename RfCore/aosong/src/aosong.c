@@ -1,6 +1,19 @@
+// Copyright 2019 Oleg Petrochenko
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "aosong.h"
-#include "clock.h"
-#include "platform.h"
+#include "aosong_hal.h"
 
 //================================================================================
 //                  Aosong tempertaure/humidity sesors protocol
@@ -25,46 +38,46 @@
 // t - temperature bit
 // c - checksum bit
 //================================================================================
-#define TEMPERATURE_OFFSET 8
-#define HUMIDITY_OFFSET 24
-#define NEGATIVE_TEMPERATURE_BIT 0x8000
-#define pin_state(port, pin) ((port)->IDR >> (pin) & 1)
+#define TEMPERATURE_OFFSET 8U
+#define HUMIDITY_OFFSET 24U
+#define NEGATIVE_TEMPERATURE_BIT 0x8000U
+#define RESPONSE_BIT_COUNT 40U
 
-typedef enum { pin_high = 0, pin_low = 1 } required_state;
-static void wait_for_pin_state(required_state state, GpioPort* port, GpioPin pin);
 uint_fast32_t bin2_ascii(uint_fast16_t input);
-static uint64_t aosong_sensor_raw_data;
+static uint8_t aosong_sensor_raw_data[5];
 
 aosong_status aosong_read_sensor()
 {
-	GpioPinConfig(port, pin, GpioModeGpoPushPullLowSpeed);
-	GpioPinWrite(port, pin, GpioValueLo);
-	__delay_us(Tbe);
+	aosong_set_sensor_pin_as_output_push_pull();
 
-	__disable_interrupts();
-	GpioPinConfig(port, pin, GpioModeInputPullUp);
+	aosong_set_sensor_pin_low();
+	aosong_delay_us(Tbe);
 
-	__delay_us(Tgo);
+	aosong_disable_irq();
 
-	if (pin_state(port, pin))
+	aosong_set_sensor_pin_as_input_pullup();
+
+	aosong_delay_us(Tgo);
+
+	if (aosong_sensor_pin_is_high())
 	{
-		__enable_interrupts();
+		aosong_enable_irq();
 		return aosong_no_response;
 	}
 
-	wait_for_pin_state(pin_high, port, pin);
+	aosong_wait_for_sensor_pin_high();
 
-	for (uint_fast8_t t = 0; t < 40; t++)
+	for (uint_fast8_t t = 0; t < RESPONSE_BIT_COUNT; t++)
 	{
-		wait_for_pin_state(pin_low, port, pin);
-		wait_for_pin_state(pin_high, port, pin);
-		__delay_us(Th0);
-		aosong_sensor_raw_data <<= 1;
-		if (pin_state(port, pin))
-			aosong_sensor_raw_data |= 1;
+		aosong_wait_for_sensor_pin_low();
+		aosong_wait_for_sensor_pin_high();
+		aosong_delay_us(Th0);
+		aosong_sensor_raw_data[t / 8] <<= 1;
+		if (aosong_sensor_pin_is_high())
+			aosong_sensor_raw_data[t / 8]++;
 	}
 
-	__enable_interrupts();
+	aosong_enable_irq();
 
 	uint8_t* d_pt = (uint8_t*)&aosong_sensor_raw_data;
 	if (*d_pt != (uint8_t)(d_pt[1] + d_pt[2] + d_pt[3] + d_pt[4]))
@@ -73,20 +86,9 @@ aosong_status aosong_read_sensor()
 	return aosong_ok;
 }
 
-void wait_for_pin_state(required_state state, GpioPort* port, GpioPin pin)
-{
-	uint32_t timeout_counter = 0;
-	while (pin_state(port, pin) == state)
-	{
-		timeout_counter++;
-		if (timeout_counter > TIMEOUT)
-			return;
-	}
-}
-
 uint32_t aosong_get_raw_data()
 {
-	return aosong_sensor_raw_data >> 8;
+	return (uint32_t)&aosong_sensor_raw_data;
 }
 
 uint_fast16_t aosong_get_temperature(void)
@@ -103,28 +105,28 @@ uint_fast16_t aosong_get_humidity(void)
 
 uint32_t aosong_get_temperature_ascii(void)
 {
-	const uint_fast16_t input = aosong_sensor_raw_data >> TEMPERATURE_OFFSET;
-	if ((input & NEGATIVE_TEMPERATURE_BIT) != 0)
-		return 0;
-	return bin2_ascii(input);
+	//const uint_fast16_t input = aosong_sensor_raw_data >> TEMPERATURE_OFFSET;
+	//if ((input & NEGATIVE_TEMPERATURE_BIT) != 0)
+	//	return 0;
+	return bin2_ascii(5);
 }
 
 uint32_t aosong_get_humidity_ascii(void)
 {
-	const uint_fast16_t input = aosong_sensor_raw_data >> HUMIDITY_OFFSET;
-	return bin2_ascii(input);
+	//const uint_fast16_t input = aosong_sensor_raw_data >> HUMIDITY_OFFSET;
+	return bin2_ascii(5);
 }
 
 uint_fast32_t bin2_ascii(uint_fast16_t input)
 {
-	uint8_t rArr[4];
-	uint32_t* rPtr = (uint32_t*)rArr;
+	uint8_t r_arr[4];
+	uint32_t* r_ptr = (uint32_t*)r_arr;
 	input = (uint16_t)input;
-	*rPtr = input / 100;
-	input -= *rPtr * 100;
-	rArr[1] = input / 10;
-	input -= rArr[1] * 10;
-	rArr[3] = input;
-	*rPtr |= 0x302E3030;
-	return *rPtr;
+	*r_ptr = input / 100;
+	input -= *r_ptr * 100;
+	r_arr[1] = input / 10;
+	input -= r_arr[1] * 10;
+	r_arr[3] = input;
+	*r_ptr |= 0x302E3030;
+	return *r_ptr;
 }

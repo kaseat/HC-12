@@ -2098,6 +2098,18 @@
         </settings>
     </configuration>
     <file>
+        <name>$PROJ_DIR$\aosong\src\aosong.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\aosong\inc\aosong.h</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\aosong\src\aosong_hal.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\aosong\inc\aosong_hal.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\clock\src\clock.c</name>
     </file>
     <file>
