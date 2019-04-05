@@ -38,25 +38,19 @@
 // t - temperature bit
 // c - checksum bit
 //================================================================================
-#define TEMPERATURE_OFFSET 8U
-#define HUMIDITY_OFFSET 24U
-#define NEGATIVE_TEMPERATURE_BIT 0x8000U
+#define NEGATIVE_TEMPERATURE_BIT 0x80U
+#define NEGATIVE_TEMPERATURE_MASK 0x7FU
 #define RESPONSE_BIT_COUNT 40U
 
-uint_fast32_t bin2_ascii(uint_fast16_t input);
 static uint8_t aosong_sensor_raw_data[5];
 
 aosong_status aosong_read_sensor()
 {
 	aosong_set_sensor_pin_as_output_push_pull();
-
 	aosong_set_sensor_pin_low();
 	aosong_delay_us(Tbe);
-
 	aosong_disable_irq();
-
 	aosong_set_sensor_pin_as_input_pullup();
-
 	aosong_delay_us(Tgo);
 
 	if (aosong_sensor_pin_is_high())
@@ -91,40 +85,19 @@ uint32_t aosong_get_raw_data()
 	return *(uint32_t*)aosong_sensor_raw_data;
 }
 
-uint16_t aosong_get_temperature(void)
+int16_t aosong_get_temperature(void)
 {
-	return *(uint16_t*)&aosong_sensor_raw_data[2];
+	uint16_t temperature = *(uint16_t*)& aosong_sensor_raw_data[2];
+	if (aosong_sensor_raw_data[2] & NEGATIVE_TEMPERATURE_BIT)
+	{
+		*((uint8_t*)& temperature) &= NEGATIVE_TEMPERATURE_MASK;
+		temperature = ~temperature + 1;
+	}
+
+	return temperature;
 }
 
-uint16_t aosong_get_humidity(void)
+int16_t aosong_get_humidity(void)
 {
-	return *(uint16_t*)&aosong_sensor_raw_data[0];
-}
-
-uint32_t aosong_get_temperature_ascii(void)
-{
-	//const uint_fast16_t input = aosong_sensor_raw_data >> TEMPERATURE_OFFSET;
-	//if ((input & NEGATIVE_TEMPERATURE_BIT) != 0)
-	//	return 0;
-	return bin2_ascii(5);
-}
-
-uint32_t aosong_get_humidity_ascii(void)
-{
-	//const uint_fast16_t input = aosong_sensor_raw_data >> HUMIDITY_OFFSET;
-	return bin2_ascii(5);
-}
-
-uint_fast32_t bin2_ascii(uint_fast16_t input)
-{
-	uint8_t r_arr[4];
-	uint32_t* r_ptr = (uint32_t*)r_arr;
-	input = (uint16_t)input;
-	*r_ptr = input / 100;
-	input -= *r_ptr * 100;
-	r_arr[1] = input / 10;
-	input -= r_arr[1] * 10;
-	r_arr[3] = input;
-	*r_ptr |= 0x302E3030;
-	return *r_ptr;
+	return *(int16_t*)& aosong_sensor_raw_data[0];
 }

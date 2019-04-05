@@ -64,6 +64,13 @@ uint32_t hc12_transmitter_get_baudrate(void);
 void hc12_transmitter_send_byte(uint8_t data);
 
 /**
+* \brief Data transfer interface. Send data.
+* \param buff Data buffer.
+* \param length Data length.
+*/
+void hc12_transmitter_send_data(uint8_t* buff, uint8_t length);
+
+/**
 * \brief Data transfer interface. Send null terminated string.
 * \param s Null terminated string.
 */

@@ -211,6 +211,11 @@ void hc12_send_byte(uint8_t data)
 	hc12_transmitter_send_byte(data);
 }
 
+void hc12_send_data(uint8_t* buff, uint8_t length)
+{
+	hc12_transmitter_send_data(buff, length);
+}
+
 bool hc12_set_transmission_mode(transmitter_mode m)
 {
 	enter_cfg_mode();

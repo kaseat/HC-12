@@ -177,6 +177,13 @@ bool hc12_send_ping(void);
 void hc12_send_byte(uint8_t data);
 
 /**
+* \brief Send data using hc-12 transmitter.
+* \param buff Data buffer.
+* \param length Data length.
+*/
+void hc12_send_data(uint8_t* buff, uint8_t length);
+
+/**
  * \brief Set transmission mode.
  * \param m Transmission mode.
  * \return Returns 'true' if transmission mode has changed successfully, otherwise returns 'false'.

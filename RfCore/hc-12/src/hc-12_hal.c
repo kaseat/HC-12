@@ -60,6 +60,11 @@ void hc12_transmitter_send_byte(const uint8_t data)
 	uart_send_byte(data);
 }
 
+void hc12_transmitter_send_data(uint8_t* buff, uint8_t length)
+{
+	uart_send_data(buff, length);
+}
+
 void hc12_transmitter_send_string(char* s)
 {
 	uart_send_string(s);
